@@ -4,8 +4,8 @@ using System.Collections;
 public class CollidingCharacters : MonoBehaviour {
 
 	public GameObject collidingSoundPrefab;
-	private Collider collider;
-	AudioSource audio;
+	public bool playOnAwake;
+	private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
@@ -24,5 +24,6 @@ public class CollidingCharacters : MonoBehaviour {
 	void OnTriggerEnter(Collider collider) {
 		Debug.Log (gameObject.name + " was triggered by " + collider.gameObject.name);
 		Instantiate(collidingSoundPrefab, transform.position, transform.rotation);
+		audio.Play();
 		}
 }
