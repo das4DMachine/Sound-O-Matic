@@ -18,7 +18,7 @@ public class SensorReader : MonoBehaviour
 
     private SerialPort stream;
 
-    public void Open()
+    public void Start()
     {
         // Opens the serial port
         stream = new SerialPort(port, baudrate);
@@ -27,35 +27,18 @@ public class SensorReader : MonoBehaviour
         //this.stream.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
     }
 
-    public void Start()
-    {
-
-    }
 
     public void Update()
     {
 
-
-        AsynchronousReadFromArduino
-            ((string s) => Debug.Log(s),     // Callback
-            () => Debug.LogError("Error!"), // Error callback
-            10f                             // Timeout (seconds)
+        StartCoroutine(
+            AsynchronousReadFromArduino
+            ((string s) => MoveCaracter(s),     // Callback
+            null, // Error callback
+            100f                             // Timeout (seconds)
+            )
             );
 
-    }
-
-
-    public string ReadFromArduino(int timeout = 0)
-    {
-        stream.ReadTimeout = timeout;
-        try
-        {
-            return stream.ReadLine();
-        }
-        catch (TimeoutException)
-        {
-            return null;
-        }
     }
 
 
@@ -100,6 +83,19 @@ public class SensorReader : MonoBehaviour
     public void Close()
     {
         stream.Close();
+    }
+
+    public void MoveCaracter(String data)
+    {
+        if (data.Equals("1"))
+        {
+            //Flyt ind i pendulet
+            transform.position = new Vector3(3.49f, 0f, 0.98f);
+        }
+        else
+        {
+            transform.position = new Vector3(3.49f, 0f, -20f);
+        }
     }
 
 }

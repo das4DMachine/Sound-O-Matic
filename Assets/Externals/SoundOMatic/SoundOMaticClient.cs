@@ -87,7 +87,7 @@ public class SoundOMaticClient : MonoBehaviour {
 			// We have connection, set up reader thread
 			ThreadStart threadDelegate = new ThreadStart(this.serverStreamParser);
 			Thread newThread = new Thread(threadDelegate);
-			newThread.Start();
+			//newThread.Start();
 		}
 
 		// We are happy, server is happy, let's get going for real now!
@@ -215,6 +215,8 @@ public class SoundOMaticClient : MonoBehaviour {
 	// Update is called once per change
 	void Update () {
 		try {
+            //if (tcpClient == null) Debug.Log("clie t is not");
+            //Debug.Log("update " + clientInitialized + " og " + tcpClient.Connected);
 			if (clientInitialized && tcpClient!=null && tcpClient.Connected){
 				if (masterGain!=masterGainOld){
 					this.sendPacket("masterGain "+masterGain);
