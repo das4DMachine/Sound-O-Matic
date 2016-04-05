@@ -4,13 +4,16 @@ using System.Collections;
 public class CollidingCharacters : MonoBehaviour {
 
 	public GameObject collidingSoundPrefab;
+	public GameObject spawnSound1;
+	public Transform collidingSound1;
 	public bool playOnAwake;
 	private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
 		audio = GetComponent<AudioSource>();
-		collidingSoundPrefab = Resources.Load("CollisionSound") as GameObject;
+		spawnSound1 = GameObject.Find("Sphere");
+		collidingSoundPrefab = Resources.Load("CollisionSound");
 	}
 	
 	// Update is called once per frame
@@ -23,7 +26,7 @@ public class CollidingCharacters : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collider) {
 		Debug.Log (gameObject.name + " was triggered by " + collider.gameObject.name);
-		Instantiate(collidingSoundPrefab, transform.position, transform.rotation);
-		audio.Play();
+		collidingSound1 = Instantiate(collidingSoundPrefab, transform.position, transform.rotation);
+		collidingSound1.transform.parent = spawnSound1.transform;
 		}
 }
