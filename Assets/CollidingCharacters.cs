@@ -3,10 +3,11 @@ using System.Collections;
 
 public class CollidingCharacters : MonoBehaviour {
 
-	public GameObject collidingSoundPrefab;
+	public Object collidingSoundPrefab;
 	public GameObject spawnSound1;
-	public Transform collidingSound1;
-	public bool playOnAwake;
+    private GameObject collidingSound1;
+
+    public bool playOnAwake;
 	private AudioSource audio;
 
 	// Use this for initialization
@@ -26,7 +27,9 @@ public class CollidingCharacters : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collider) {
 		Debug.Log (gameObject.name + " was triggered by " + collider.gameObject.name);
-		collidingSound1 = Instantiate(collidingSoundPrefab, transform.position, transform.rotation);
-		collidingSound1.transform.parent = spawnSound1.transform;
-		}
+
+		collidingSound1 = (GameObject) Instantiate(collidingSoundPrefab, transform.position, transform.rotation);
+        collidingSound1.transform.parent = spawnSound1.transform;
+
+        }
 }
